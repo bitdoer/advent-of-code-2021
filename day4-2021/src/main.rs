@@ -56,7 +56,6 @@ impl Bingo {
             || self.column_marked(2)
             || self.column_marked(3)
             || self.column_marked(4)
-            || self.diag_marked()
         {
             self.bingoed = true;
             Some(
@@ -85,19 +84,6 @@ impl Bingo {
             && self.card[n + 10].is_marked()
             && self.card[n + 15].is_marked()
             && self.card[n + 20].is_marked()
-    }
-
-    fn diag_marked(&self) -> bool {
-        (self.card[0].is_marked()
-            && self.card[6].is_marked()
-            && self.card[12].is_marked()
-            && self.card[18].is_marked()
-            && self.card[24].is_marked())
-            || (self.card[0].is_marked()
-                && self.card[6].is_marked()
-                && self.card[12].is_marked()
-                && self.card[18].is_marked()
-                && self.card[24].is_marked())
     }
 }
 
