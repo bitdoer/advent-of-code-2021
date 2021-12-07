@@ -47,14 +47,34 @@ fn main() {
         )
     };
     println!("{}", part1);
-    // part 2, dealing with a quadratic variation, is minimized instead by the mean;
-    // since the mean is not available as such (being non-integral), we take a similar
-    // tack, considering exactly those two integers immediately surrounding it as
-    // candidates
-    let mean = parsed.iter().sum::<i64>() as f64 / parsed.len() as f64;
-    let part2 = min(
-        part2_deviation(&parsed, mean.floor() as i64),
-        part2_deviation(&parsed, mean.ceil() as i64),
-    );
+    // for part 2, the mean is going to be pretty darn close to the answer; we look
+    // to see in what direction the quantity decreases, and keep going that way until
+    // it starts to increase again
+    let mut minimizer = (parsed.iter().sum::<i64>() as f64 / parsed.len() as f64).floor() as i64;
+    let mut i = 1;
+    if part2_deviation(&parsed, minimizer + 1) < part2_deviation(&parsed, minimizer) {
+        loop {
+            if part2_deviation(&parsed, minimizer + (i + 1))
+                > part2_deviation(&parsed, minimizer + i)
+            {
+                minimizer = minimizer + i;
+                break;
+            } else {
+                i += 1;
+            }
+        }
+    } else if part2_deviation(&parsed, minimizer - 1) < part2_deviation(&parsed, minimizer) {
+        loop {
+            if part2_deviation(&parsed, minimizer - (i + 1))
+                > part2_deviation(&parsed, minimizer - i)
+            {
+                minimizer = minimizer - i;
+                break;
+            } else {
+                i += 1;
+            }
+        }
+    }
+    let part2 = part2_deviation(&parsed, minimizer);
     println!("{}", part2);
 }
