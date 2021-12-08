@@ -57,7 +57,7 @@ fn main() {
             if part2_deviation(&parsed, minimizer + (i + 1))
                 > part2_deviation(&parsed, minimizer + i)
             {
-                minimizer = minimizer + i;
+                minimizer += i;
                 break;
             } else {
                 i += 1;
@@ -68,7 +68,7 @@ fn main() {
             if part2_deviation(&parsed, minimizer - (i + 1))
                 > part2_deviation(&parsed, minimizer - i)
             {
-                minimizer = minimizer - i;
+                minimizer -= i;
                 break;
             } else {
                 i += 1;
