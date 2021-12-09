@@ -1,7 +1,12 @@
 use std::fs;
 
 fn update(lanternfish: &mut [u64]) {
+    // this effectively "ticks down all counters" with rollover; the rollover handles
+    // each fish with a timer at 0 giving birth to a fish with a timer at 8.
+    // however, the problem says that every fish that's at 0 gets its timer
+    // reset to 6---this line does not handle that
     lanternfish.rotate_left(1);
+    // this line does!
     lanternfish[6] += lanternfish[8];
 }
 
