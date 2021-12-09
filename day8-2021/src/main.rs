@@ -27,7 +27,7 @@ fn to_digits(all_digits: &[String]) -> Vec<usize> {
                 // of 5-segment digits (2, 3, 5), only 3 completely contains 7's segments
                 if count_overlap(x, &seven_pattern) == 3 {
                     3
-                // of the remaining, only 3 has an overlap of 3 segments with 4
+                // of the remaining, only 5 has an overlap of 3 segments with 4
                 } else if count_overlap(x, &four_pattern) == 3 {
                     5
                 } else {
