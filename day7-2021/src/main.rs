@@ -49,31 +49,35 @@ fn main() {
     println!("{}", part1);
     // for part 2, the mean is going to be pretty darn close to the answer; we look
     // to see in what direction the quantity decreases, and keep going that way until
-    // it starts to increase again
-    let mut minimizer = (parsed.iter().sum::<i64>() as f64 / parsed.len() as f64).floor() as i64;
+    // it starts to increase again---in this way, we descend to the unique global minimum
+    // (and this is guaranteed because we're minimizing a convex function)
+    let mean = (parsed.iter().sum::<i64>() as f64 / parsed.len() as f64).round() as i64;
+    let minimizer;
     let mut i = 1;
-    if part2_deviation(&parsed, minimizer + 1) < part2_deviation(&parsed, minimizer) {
+    if part2_deviation(&parsed, mean + 1) < part2_deviation(&parsed, mean) {
         loop {
-            if part2_deviation(&parsed, minimizer + (i + 1))
-                > part2_deviation(&parsed, minimizer + i)
+            if part2_deviation(&parsed, mean + (i + 1))
+                > part2_deviation(&parsed, mean + i)
             {
-                minimizer += i;
+                minimizer = mean + i;
                 break;
             } else {
                 i += 1;
             }
         }
-    } else if part2_deviation(&parsed, minimizer - 1) < part2_deviation(&parsed, minimizer) {
+    } else if part2_deviation(&parsed, mean - 1) < part2_deviation(&parsed, mean) {
         loop {
-            if part2_deviation(&parsed, minimizer - (i + 1))
-                > part2_deviation(&parsed, minimizer - i)
+            if part2_deviation(&parsed, mean - (i + 1))
+                > part2_deviation(&parsed, mean - i)
             {
-                minimizer -= i;
+                minimizer = mean - i;
                 break;
             } else {
                 i += 1;
             }
         }
+    } else {
+        minimizer = mean;
     }
     let part2 = part2_deviation(&parsed, minimizer);
     println!("{}", part2);
