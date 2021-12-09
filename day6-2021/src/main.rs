@@ -6,7 +6,8 @@ fn update(lanternfish: &mut [u64]) {
     // however, the problem says that every fish that's at 0 gets its timer
     // reset to 6---this line does not handle that
     lanternfish.rotate_left(1);
-    // this line does!
+    // this line does! the value in lanternfish[8] is exactly identical to the value that
+    // used to be in lanternfish[0], so this does exactly what we want
     lanternfish[6] += lanternfish[8];
 }
 
