@@ -17,28 +17,35 @@ fn find_answer(input: &str, part: Part) -> usize {
         let mut second_pair = line.split(" -> ").nth(1).unwrap().split(',');
         let x2 = second_pair.next().unwrap().parse::<usize>().unwrap();
         let y2 = second_pair.next().unwrap().parse::<usize>().unwrap();
+        // vertical lines
         if x1 == x2 {
             for i in min(y1, y2)..=max(y1, y2) {
                 ocean_floor[x1][i] += 1;
             }
+        // horizontal lines
         } else if y1 == y2 {
             #[allow(clippy::needless_range_loop)]
             for i in min(x1, x2)..=max(x1, x2) {
                 ocean_floor[i][y1] += 1;
             }
+        // diagonal lines
         } else if let Part::Two = part {
+            // down and right
             if x1 < x2 && y1 < y2 {
                 for i in 0..=(x2 - x1) {
                     ocean_floor[x1 + i][y1 + i] += 1;
                 }
+            // up and right
             } else if x1 < x2 && y1 > y2 {
                 for i in 0..=(x2 - x1) {
                     ocean_floor[x1 + i][y1 - i] += 1;
                 }
+            // down and left
             } else if x1 > x2 && y1 < y2 {
                 for i in 0..=(x1 - x2) {
                     ocean_floor[x1 - i][y1 + i] += 1;
                 }
+            // up and left
             } else {
                 for i in 0..=(x1 - x2) {
                     ocean_floor[x1 - i][y1 - i] += 1;
